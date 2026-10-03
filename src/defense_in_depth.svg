@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 640" font-family="'Noto Sans CJK SC','WenQuanYi Micro Hei','Microsoft YaHei',sans-serif">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2563eb"/><stop offset="1" stop-color="#60a5fa"/>
+    </linearGradient>
+    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0d9488"/><stop offset="1" stop-color="#5eead4"/>
+    </linearGradient>
+    <linearGradient id="g4" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ea580c"/><stop offset="1" stop-color="#fdba74"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="980" height="640" fill="#f8fafc"/>
+  <text x="490" y="42" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">防御纵深：四层约束，从「请求」到「做不到」</text>
+  <text x="490" y="68" text-anchor="middle" font-size="13" fill="#64748b">外层被绕过时，内层仍然兜底 —— 单层防御永远不够</text>
+
+  <!-- 四层横条 -->
+  <!-- L1 规则层 -->
+  <rect x="60" y="96" width="560" height="96" rx="12" fill="url(#g1)" opacity="0.92"/>
+  <text x="84" y="126" font-size="16" font-weight="700" fill="#ffffff">Layer 1 · 规则层（软约束）</text>
+  <text x="84" y="150" font-size="12" fill="#f3e8ff">System Prompt / CLAUDE.md / 工具描述里写「请勿删除文件」</text>
+  <text x="84" y="170" font-size="12" fill="#f3e8ff">本质：请求式约束 —— 模型可以忽略、可以被注入覆盖</text>
+  <rect x="640" y="108" width="120" height="72" rx="8" fill="#ffffff" opacity="0.92"/>
+  <text x="700" y="136" text-anchor="middle" font-size="12" font-weight="700" fill="#6b21a8">可被绕过</text>
+  <text x="700" y="156" text-anchor="middle" font-size="11" fill="#7e22ce">概率性防线</text>
+
+  <!-- L2 检查层 -->
+  <rect x="60" y="204" width="560" height="96" rx="12" fill="url(#g2)" opacity="0.92"/>
+  <text x="84" y="234" font-size="16" font-weight="700" fill="#ffffff">Layer 2 · 检查层（代码拦截）</text>
+  <text x="84" y="258" font-size="12" fill="#dbeafe">check_path_escape() 路径白名单 · 危险命令黑名单 · 注入模式扫描 · pre/post Hook</text>
+  <text x="84" y="278" font-size="12" fill="#dbeafe">本质：Agent 主循环里的 if 判断 —— 工具内部实现不当时可被绕过</text>
+  <rect x="640" y="216" width="120" height="72" rx="8" fill="#ffffff" opacity="0.92"/>
+  <text x="700" y="244" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">难绕过</text>
+  <text x="700" y="264" text-anchor="middle" font-size="11" fill="#1d4ed8">确定性·但有盲区</text>
+
+  <!-- L3 沙箱层 -->
+  <rect x="60" y="312" width="560" height="96" rx="12" fill="url(#g3)" opacity="0.92"/>
+  <text x="84" y="342" font-size="16" font-weight="700" fill="#ffffff">Layer 3 · 沙箱层（环境隔离）</text>
+  <text x="84" y="366" font-size="12" fill="#ccfbf1">PermissionMode 权限模式 · NetworkPolicy 网络默认拒绝 · FilesystemPolicy 文件白名单</text>
+  <text x="84" y="386" font-size="12" fill="#ccfbf1">本质：deny-by-default —— 不是「不许做」，而是「做不到」</text>
+  <rect x="640" y="324" width="120" height="72" rx="8" fill="#ffffff" opacity="0.92"/>
+  <text x="700" y="352" text-anchor="middle" font-size="12" font-weight="700" fill="#115e59">几乎无法绕过</text>
+  <text x="700" y="372" text-anchor="middle" font-size="11" fill="#0f766e">策略在框架内强制</text>
+
+  <!-- L4 容器层 -->
+  <rect x="60" y="420" width="560" height="96" rx="12" fill="url(#g4)" opacity="0.92"/>
+  <text x="84" y="450" font-size="16" font-weight="700" fill="#ffffff">Layer 4 · 容器层（系统级隔离）</text>
+  <text x="84" y="474" font-size="12" fill="#ffedd5">Docker: --network=none --cap-drop=ALL --pids-limit=256 · VM · seccomp / gVisor</text>
+  <text x="84" y="494" font-size="12" fill="#ffedd5">本质：操作系统内核级边界，进程内任何代码都无法突破</text>
+  <rect x="640" y="432" width="120" height="72" rx="8" fill="#ffffff" opacity="0.92"/>
+  <text x="700" y="460" text-anchor="middle" font-size="12" font-weight="700" fill="#9a3412">无法绕过</text>
+  <text x="700" y="480" text-anchor="middle" font-size="11" fill="#c2410c">内核强制执行</text>
+
+  <!-- 右侧数据面板 -->
+  <rect x="700" y="520" width="220" height="104" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.3"/>
+  <text x="716" y="544" font-size="12.5" font-weight="700" fill="#0f172a">120 次对抗压力测试（书 表3-5）</text>
+  <text x="716" y="566" font-size="11.5" fill="#475569">仅规则层 L0：总拦截率 44.2%</text>
+  <text x="716" y="586" font-size="11.5" fill="#475569">四层叠加 L3：总拦截率 83.8%</text>
+  <text x="716" y="608" font-size="10.5" fill="#94a3b8">多层价值在于叠加兜底，而非单点拦截</text>
+
+  <!-- 连接线：条形 → 数据面板 -->
+  <path d="M 620,468 C 670,468 690,520 700,560" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4 3"/>
+
+  <!-- 底部结论 -->
+  <rect x="60" y="546" width="620" height="78" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="1.3"/>
+  <text x="80" y="572" font-size="13" font-weight="700" fill="#92400e">为什么必须分层？模型是概率系统</text>
+  <text x="80" y="592" font-size="11.5" fill="#a16207">任何单层防御都有非零失误率：prompt 会被注入、黑名单会被编码绕过、</text>
+  <text x="80" y="610" font-size="11.5" fill="#a16207">用户会疲劳审批（Anthropic 实测：93% 的权限弹窗被无脑批准）。层层叠加才可靠。</text>
+</svg>

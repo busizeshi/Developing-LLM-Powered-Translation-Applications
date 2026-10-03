@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 664" width="720" height="664" role="img" aria-label="Harness 六层协同运行时：用户任务进入编排层主循环，经上下文拼装、模型生成工具调用、工具层分发、约束校验、执行返回、Guard 验证、记忆压缩后回到上下文循环，模型停止调用工具时返回最终结果">
+  <style>
+    text{font-family:'Noto Sans CJK SC','PingFang SC','Microsoft YaHei',sans-serif;}
+    .n-title{font-size:14px;font-weight:600;fill:#171717;}
+    .n-sub{font-size:12px;fill:#52525B;}
+    .mono{font-family:'SFMono-Regular',Consolas,'Courier New',monospace;}
+    .ct{font-size:14px;font-weight:600;fill:#52525B;}
+    .flow{fill:none;stroke:#52525B;stroke-width:1.5;stroke-linecap:round;}
+    .flow-brand{fill:none;stroke:#4B3FE3;stroke-width:1.5;stroke-linecap:round;}
+  </style>
+  <defs>
+    <marker id="arr-muted" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M1 1 L7 4 L1 7 Z" fill="#52525B"/>
+    </marker>
+    <marker id="arr-brand" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M1 1 L7 4 L1 7 Z" fill="#4B3FE3"/>
+    </marker>
+  </defs>
+
+  <!-- 起点节点 -->
+  <rect x="140" y="40" width="120" height="36" rx="18" fill="#EFEFF2" stroke="rgba(23,23,23,0.12)"/>
+  <text x="200" y="63" text-anchor="middle" class="n-title">用户任务</text>
+
+  <!-- 编排层结构容器（虚线） -->
+  <rect x="40" y="104" width="640" height="444" rx="12" fill="#EFEFF2" stroke="rgba(23,23,23,0.12)" stroke-dasharray="6 4"/>
+  <text x="360" y="130" text-anchor="middle" class="ct">编排层 run() 主循环</text>
+
+  <!-- 左列：主循环链 -->
+  <rect x="85" y="156" width="230" height="58" rx="8" fill="#F7F7F8" stroke="rgba(23,23,23,0.12)"/>
+  <text x="200" y="178" text-anchor="middle" class="n-title">上下文层拼装本轮输入</text>
+  <text x="200" y="200" text-anchor="middle" class="n-sub">prompt · CLAUDE.md · 记忆围栏</text>
+
+  <rect x="85" y="242" width="230" height="44" rx="8" fill="#4B3FE3" stroke="#4B3FE3"/>
+  <text x="200" y="269" text-anchor="middle" class="n-title" fill="#FFFFFF">模型生成工具调用</text>
+
+  <rect x="85" y="316" width="230" height="58" rx="8" fill="#F7F7F8" stroke="rgba(23,23,23,0.12)"/>
+  <text x="200" y="338" text-anchor="middle" class="n-title">结果回到上下文</text>
+  <text x="200" y="360" text-anchor="middle" class="n-sub">进入下一轮</text>
+
+  <!-- 右列：工具执行链 -->
+  <rect x="390" y="156" width="230" height="44" rx="8" fill="#F7F7F8" stroke="rgba(23,23,23,0.12)"/>
+  <text x="505" y="183" text-anchor="middle" class="n-title">工具层分发</text>
+
+  <rect x="390" y="224" width="230" height="58" rx="8" fill="#F7F7F8" stroke="rgba(23,23,23,0.12)"/>
+  <text x="505" y="246" text-anchor="middle" class="n-title">约束层校验</text>
+  <text x="505" y="268" text-anchor="middle" class="n-sub">开关 · 路径 · 命令</text>
+
+  <rect x="390" y="306" width="230" height="58" rx="8" fill="#F7F7F8" stroke="rgba(23,23,23,0.12)"/>
+  <text x="505" y="328" text-anchor="middle" class="n-title">执行并返回</text>
+  <text x="505" y="350" text-anchor="middle" class="n-sub mono">(ok, content)</text>
+
+  <rect x="390" y="388" width="230" height="58" rx="8" fill="#F7F7F8" stroke="rgba(23,23,23,0.12)"/>
+  <text x="505" y="410" text-anchor="middle" class="n-title">验证层 Guard</text>
+  <text x="505" y="432" text-anchor="middle" class="n-sub">异常 → 提醒</text>
+
+  <rect x="390" y="470" width="230" height="58" rx="8" fill="#F7F7F8" stroke="rgba(23,23,23,0.12)"/>
+  <text x="505" y="492" text-anchor="middle" class="n-title">记忆层</text>
+  <text x="505" y="514" text-anchor="middle" class="n-sub">超阈值 → 压缩</text>
+
+  <!-- 连接器：入口 -->
+  <path d="M200 76 V100" class="flow" marker-end="url(#arr-muted)"/>
+  <!-- A → B -->
+  <path d="M200 214 V238" class="flow" marker-end="url(#arr-muted)"/>
+  <!-- B → 工具层分发（L 型拐弯，主路径） -->
+  <path d="M315 264 H344 Q352 264 352 256 V186 Q352 178 360 178 H386" class="flow-brand" marker-end="url(#arr-brand)"/>
+  <!-- 右列纵向链 -->
+  <path d="M505 200 V220" class="flow" marker-end="url(#arr-muted)"/>
+  <path d="M505 282 V302" class="flow" marker-end="url(#arr-muted)"/>
+  <path d="M505 364 V384" class="flow" marker-end="url(#arr-muted)"/>
+  <path d="M505 446 V466" class="flow" marker-end="url(#arr-muted)"/>
+  <!-- 记忆层 → 结果回到上下文 -->
+  <path d="M390 499 H208 Q200 499 200 491 V378" class="flow" marker-end="url(#arr-muted)"/>
+  <!-- 循环回环：回到上下文 → 上下文拼装（下一轮） -->
+  <path d="M85 345 H68 Q60 345 60 337 V193 Q60 185 68 185 H81" class="flow-brand" stroke-dasharray="5 4" marker-end="url(#arr-brand)"/>
+  <text transform="rotate(-90 71 265)" x="71" y="265" text-anchor="middle" class="n-sub">下一轮</text>
+
+  <!-- 出口 -->
+  <path d="M200 548 V570" class="flow" marker-end="url(#arr-muted)"/>
+  <rect x="120" y="574" width="160" height="48" rx="24" fill="#4B3FE3" stroke="#4B3FE3"/>
+  <text x="200" y="596" text-anchor="middle" class="n-title" fill="#FFFFFF">返回最终结果</text>
+  <text x="200" y="614" text-anchor="middle" class="n-sub" fill="#FFFFFF" opacity="0.8">模型停止调用工具</text>
+</svg>

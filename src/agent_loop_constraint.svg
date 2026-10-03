@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" font-family="'Noto Sans CJK SC','WenQuanYi Micro Hei','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="620" fill="#f8fafc"/>
+  <text x="490" y="42" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">最小 Agent 循环：约束层在哪里起作用</text>
+  <text x="490" y="68" text-anchor="middle" font-size="13" fill="#64748b">Agent = 模型 + 挽具（Harness）：模型提供智能，约束层决定「能做什么」</text>
+
+  <!-- ===== 左侧：循环 ===== -->
+  <!-- 1 用户任务 -->
+  <rect x="90" y="100" width="240" height="54" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+  <text x="210" y="122" text-anchor="middle" font-size="14" font-weight="600" fill="#075985">① 用户任务</text>
+  <text x="210" y="142" text-anchor="middle" font-size="11.5" fill="#0369a1">自然语言目标，如「修复这个bug」</text>
+
+  <line x1="210" y1="154" x2="210" y2="186" stroke="#475569" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- 2 模型调用 -->
+  <rect x="90" y="188" width="240" height="54" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="210" y="210" text-anchor="middle" font-size="14" font-weight="600" fill="#5b21b6">② 模型调用</text>
+  <text x="210" y="230" text-anchor="middle" font-size="11.5" fill="#6d28d9">发送上下文 → 返回文本或工具调用</text>
+
+  <line x1="210" y1="242" x2="210" y2="274" stroke="#475569" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- 3 工具调用解析 -->
+  <rect x="90" y="276" width="240" height="54" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="210" y="298" text-anchor="middle" font-size="14" font-weight="600" fill="#5b21b6">③ 工具调用解析</text>
+  <text x="210" y="318" text-anchor="middle" font-size="11.5" fill="#6d28d9">解析出 tool_name + arguments</text>
+
+  <line x1="210" y1="330" x2="210" y2="362" stroke="#475569" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- 约束层检查（菱形） -->
+  <polygon points="210,364 330,424 210,484 90,424" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+  <text x="210" y="412" text-anchor="middle" font-size="14.5" font-weight="700" fill="#9a3412">约束层检查</text>
+  <text x="210" y="434" text-anchor="middle" font-size="11.5" fill="#c2410c">路径？命令？内容？预算？循环？</text>
+
+  <!-- 拦截分支 -->
+  <line x1="90" y1="424" x2="34" y2="424" stroke="#dc2626" stroke-width="1.6" marker-end="url(#arrowRed)"/>
+  <rect x="2" y="452" width="130" height="76" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.4"/>
+  <text x="67" y="474" text-anchor="middle" font-size="12.5" font-weight="700" fill="#991b1b">拒绝执行</text>
+  <text x="67" y="492" text-anchor="middle" font-size="10.5" fill="#b91c1c">返回结构化错误，</text>
+  <text x="67" y="507" text-anchor="middle" font-size="10.5" fill="#b91c1c">让模型自行纠偏</text>
+  <text x="58" y="416" font-size="11" font-weight="600" fill="#dc2626">不通过</text>
+
+  <!-- 允许分支 -->
+  <line x1="330" y1="424" x2="386" y2="424" stroke="#16a34a" stroke-width="1.6" marker-end="url(#arrow)"/>
+  <text x="344" y="414" font-size="11" font-weight="600" fill="#16a34a">通过</text>
+
+  <!-- 4 工具执行 -->
+  <rect x="388" y="397" width="240" height="54" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="508" y="419" text-anchor="middle" font-size="14" font-weight="600" fill="#14532d">④ 工具执行</text>
+  <text x="508" y="439" text-anchor="middle" font-size="11.5" fill="#166534">真实读写文件 / 执行命令 / 查询</text>
+
+  <line x1="508" y1="451" x2="508" y2="483" stroke="#475569" stroke-width="1.6" marker-end="url(#arrow)"/>
+
+  <!-- 5 结果回填 -->
+  <rect x="388" y="485" width="240" height="54" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="508" y="507" text-anchor="middle" font-size="14" font-weight="600" fill="#334155">⑤ 结果回填上下文</text>
+  <text x="508" y="527" text-anchor="middle" font-size="11.5" fill="#475569">工具输出作为消息追加，供下一轮使用</text>
+
+  <!-- 回环箭头：⑤ → ② -->
+  <path d="M 628,512 H 760 V 215 H 330" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arrowBlue)"/>
+  <text x="768" y="360" font-size="12" font-weight="600" fill="#2563eb">循环，直到模型</text>
+  <text x="768" y="378" font-size="12" font-weight="600" fill="#2563eb">不再请求工具</text>
+
+  <!-- ===== 右侧：约束层的检查内容 ===== -->
+  <rect x="680" y="96" width="284" height="252" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+  <rect x="680" y="96" width="284" height="40" rx="12" fill="#0f172a"/>
+  <rect x="680" y="120" width="284" height="16" fill="#0f172a"/>
+  <text x="822" y="122" text-anchor="middle" font-size="14.5" font-weight="700" fill="#ffffff">约束层每圈检查什么</text>
+
+  <text x="700" y="164" font-size="12.5" font-weight="700" fill="#0f172a">1. 路径安全</text>
+  <text x="700" y="182" font-size="11" fill="#475569">resolve() 后必须落在工作区内，</text>
+  <text x="700" y="197" font-size="11" fill="#475569">拦截 ../../etc/passwd 穿越与符号链接</text>
+
+  <text x="700" y="224" font-size="12.5" font-weight="700" fill="#0f172a">2. 命令与内容</text>
+  <text x="700" y="242" font-size="11" fill="#475569">黑名单拦 rm -rf /、mkfs、dd 等破坏性</text>
+  <text x="700" y="257" font-size="11" fill="#475569">命令；扫描 prompt injection 模式</text>
+
+  <text x="700" y="284" font-size="12.5" font-weight="700" fill="#0f172a">3. 预算与循环</text>
+  <text x="700" y="302" font-size="11" fill="#475569">Token 预算分区控制；LoopGuard 检测</text>
+  <text x="700" y="317" font-size="11" fill="#475569">重复调用、连续失败、总量超限</text>
+
+  <line x1="700" y1="330" x2="944" y2="330" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="700" y="336" font-size="10" fill="#94a3b8">任一检查不通过 → 拒绝并把原因返回给模型</text>
+
+  <!-- 底部要点 -->
+  <rect x="90" y="556" width="800" height="44" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.3"/>
+  <text x="490" y="574" text-anchor="middle" font-size="13" font-weight="700" fill="#1e40af">核心思想：约束不是让 Agent 变弱，而是让它不把 Token 浪费在错误路径上 —— 「约束即效率」</text>
+  <text x="490" y="592" text-anchor="middle" font-size="11" fill="#3b82f6">拒绝是结构化的：返回「为什么被拒」，模型下一轮就能自己换正确路线</text>
+</svg>

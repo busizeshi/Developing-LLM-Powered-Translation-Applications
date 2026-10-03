@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="720" viewBox="0 0 980 720">
+  <defs>
+    <marker id="rq" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0369a1"/>
+    </marker>
+    <marker id="rs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b45309"/>
+    </marker>
+    <marker id="nt" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: 'Noto Sans CJK SC','WenQuanYi Micro Hei','Microsoft YaHei',sans-serif; fill:#1e293b; }
+    .title { font-size: 22px; font-weight: 700; }
+    .subtitle { font-size: 13px; fill: #64748b; }
+    .actor { font-size: 15px; font-weight: 700; }
+    .actor-sub { font-size: 11px; fill: #64748b; }
+    .msg { font-size: 12px; font-weight: 600; }
+    .msg-code { font-family: 'Consolas','JetBrains Mono',monospace; font-size: 11px; fill: #0f766e; }
+    .note { font-size: 11px; fill: #475569; }
+    .lifeline { stroke: #cbd5e1; stroke-width: 1.5; stroke-dasharray: 4 4; }
+  </style>
+
+  <rect width="980" height="720" fill="#f8fafc"/>
+  <text x="490" y="36" text-anchor="middle" class="title">MCP 交互时序：一次 JSON-RPC 2.0 会话</text>
+  <text x="490" y="58" text-anchor="middle" class="subtitle">initialize 握手能力协商 → tools/list 发现 → tools/call 执行（规范版本 2025-06-18）</text>
+
+  <!-- actors -->
+  <rect x="80" y="80" width="240" height="54" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="200" y="102" text-anchor="middle" class="actor" fill="#1d4ed8">MCP Host（AI 应用）</text>
+  <text x="200" y="120" text-anchor="middle" class="actor-sub">Claude Code / Desktop / 自研 Agent</text>
+
+  <rect x="370" y="80" width="220" height="54" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="480" y="102" text-anchor="middle" class="actor" fill="#047857">MCP Client</text>
+  <text x="480" y="120" text-anchor="middle" class="actor-sub">Host 内嵌，与每个 Server 1:1 连接</text>
+
+  <rect x="660" y="80" width="240" height="54" rx="8" fill="#fefce8" stroke="#eab308" stroke-width="1.5"/>
+  <text x="780" y="102" text-anchor="middle" class="actor" fill="#a16207">MCP Server</text>
+  <text x="780" y="120" text-anchor="middle" class="actor-sub">提供 Tools / Resources / Prompts</text>
+
+  <!-- lifelines -->
+  <line x1="200" y1="134" x2="200" y2="600" class="lifeline"/>
+  <line x1="480" y1="134" x2="480" y2="600" class="lifeline"/>
+  <line x1="780" y1="134" x2="780" y2="600" class="lifeline"/>
+
+  <!-- step 1: initialize -->
+  <line x1="200" y1="168" x2="780" y2="168" stroke="#0369a1" stroke-width="2" marker-end="url(#rq)"/>
+  <text x="490" y="160" text-anchor="middle" class="msg">① initialize 请求（能力协商）</text>
+  <text x="490" y="182" text-anchor="middle" class="msg-code">{protocolVersion, capabilities, clientInfo}</text>
+
+  <line x1="780" y1="216" x2="200" y2="216" stroke="#b45309" stroke-width="2" marker-end="url(#rs)"/>
+  <text x="490" y="208" text-anchor="middle" class="msg">② 响应：声明自己的能力</text>
+  <text x="490" y="230" text-anchor="middle" class="msg-code">{capabilities:{tools:{listChanged:true}}, serverInfo}</text>
+
+  <!-- initialized notification -->
+  <line x1="200" y1="258" x2="780" y2="258" stroke="#7c3aed" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#nt)"/>
+  <text x="490" y="251" text-anchor="middle" class="msg" fill="#7c3aed">③ notifications/initialized（无需响应，会话就绪）</text>
+
+  <!-- tools/list -->
+  <line x1="200" y1="294" x2="780" y2="294" stroke="#0369a1" stroke-width="2" marker-end="url(#rq)"/>
+  <text x="490" y="286" text-anchor="middle" class="msg">④ tools/list（发现：这个 Server 有什么工具？）</text>
+  <text x="490" y="308" text-anchor="middle" class="msg-code">响应: tools:[{name, description, inputSchema, annotations}]</text>
+
+  <rect x="600" y="322" width="330" height="52" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="612" y="341" class="note">Host 把这些定义拼进 LLM 的 tools 参数</text>
+  <text x="612" y="358" class="note">结构与 OpenAI function schema 同构，可无缝混用</text>
+
+  <!-- tools/call -->
+  <line x1="200" y1="406" x2="780" y2="406" stroke="#0369a1" stroke-width="2" marker-end="url(#rq)"/>
+  <text x="490" y="398" text-anchor="middle" class="msg">⑤ tools/call（执行）</text>
+  <text x="490" y="420" text-anchor="middle" class="msg-code">{"name":"edit_file","arguments":{"path":"a.py","old_string":"..."}}</text>
+
+  <line x1="780" y1="452" x2="200" y2="452" stroke="#b45309" stroke-width="2" marker-end="url(#rs)"/>
+  <text x="490" y="444" text-anchor="middle" class="msg">⑥ 结果（两类错误分开）</text>
+  <text x="490" y="466" text-anchor="middle" class="msg-code">成功: {content:[{type:"text",text:"..."}]}   工具自身失败: {isError:true, content:[...]}   协议级错误: JSON-RPC error</text>
+
+  <!-- list_changed -->
+  <line x1="780" y1="500" x2="200" y2="500" stroke="#7c3aed" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#nt)"/>
+  <text x="490" y="493" text-anchor="middle" class="msg" fill="#7c3aed">⑦ notifications/tools/list_changed（工具集变更 → Host 重新拉取）</text>
+
+  <!-- transport band -->
+  <rect x="60" y="620" width="860" height="72" rx="8" fill="#f1f5f9" stroke="#94a3b8"/>
+  <text x="82" y="646" class="msg">传输层（Transport Layer）</text>
+  <text x="82" y="666" class="note">stdio：本地子进程，消息按换行分隔的 JSON-RPC 写入 stdin / 读出 stdout，不得含嵌入换行</text>
+  <text x="82" y="683" class="note">Streamable HTTP：远程部署，HTTP POST 上行 + SSE 流式下行，支持 OAuth 鉴权与断线重连</text>
+  <text x="700" y="660" class="note" font-weight="700">数据层 = JSON-RPC 2.0（方法 + 通知）</text>
+</svg>
