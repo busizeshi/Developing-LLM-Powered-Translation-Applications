@@ -14,7 +14,7 @@
 
   <rect width="980" height="600" fill="#f8fafc"/>
   <text x="490" y="36" text-anchor="middle" class="title">工具描述长度的"倒U"曲线（表 4-4 实验数据）</text>
-  <text x="490" y="58" text-anchor="middle" class="subtitle">8 档描述长度 × 23 任务 × 3 seeds = 552 次观察；纵轴均为百分比（%）</text>
+  <text x="490" y="58" text-anchor="middle" class="subtitle">8 档描述长度 × 23 任务 × 3 seeds = 552 次调用；纵轴均为百分比（%）</text>
 
   <!-- peak zone -->
   <rect x="490" y="100" width="190" height="340" fill="#ecfdf5" opacity="0.7"/>
@@ -35,17 +35,17 @@
   <text x="92" y="274" text-anchor="end" class="tick">50</text>
   <text x="92" y="359" text-anchor="end" class="tick">25</text>
   <text x="92" y="444" text-anchor="end" class="tick">0</text>
-  <text x="60" y="275" text-anchor="middle" transform="rotate(-90 60 275)" class="axis">首次调用准确率 / bash 成功率（%）</text>
+  <text x="60" y="275" text-anchor="middle" transform="rotate(-90 60 275)" class="axis">首次调用准确率 / 违规调用率（%）</text>
 
-  <!-- bash success line (grey dashed) -->
+  <!-- violation rate line (grey dashed) -->
   <polyline points="130,336.6 230,395.8 330,376.1 430,405.7 530,440 630,435.2 730,420.3 830,415.5"
             fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="5 4"/>
   <text x="140" y="330" class="valb">30.4</text>
   <text x="818" y="405" class="valb">7.2</text>
-  <text x="330" y="360" class="valb">bash 成功率随长度持续走低（灰色虚线）</text>
+  <text x="330" y="360" class="valb">违规调用率：最优区间归零后回升（灰色虚线）</text>
 
   <!-- accuracy line -->
-  <polyline points="130,218.3 230,149.3 330,173.8 430,169.0 530,109.9 630,139.4 730,435.2 830,154.1"
+  <polyline points="130,218.3 230,149.3 330,173.8 430,169.0 530,109.9 630,109.9 730,139.4 830,154.1"
             fill="none" stroke="#0369a1" stroke-width="2.5"/>
 
   <!-- points + labels -->
@@ -55,8 +55,8 @@
     <circle cx="330" cy="173.8" r="5"/>
     <circle cx="430" cy="169.0" r="5"/>
     <circle cx="530" cy="109.9" r="6" stroke="#047857" stroke-width="2.5"/>
-    <circle cx="630" cy="139.4" r="5"/>
-    <circle cx="730" cy="435.2" r="5" fill="#dc2626"/>
+    <circle cx="630" cy="109.9" r="6" stroke="#047857" stroke-width="2.5"/>
+    <circle cx="730" cy="139.4" r="5"/>
     <circle cx="830" cy="154.1" r="5"/>
   </g>
   <text x="130" y="240" text-anchor="middle" class="val">65.2</text>
@@ -64,8 +64,8 @@
   <text x="330" y="196" text-anchor="middle" class="val">78.3</text>
   <text x="430" y="191" text-anchor="middle" class="val">79.7</text>
   <text x="530" y="130" text-anchor="middle" class="val" fill="#047857">97.1</text>
-  <text x="630" y="161" text-anchor="middle" class="val" fill="#047857">88.4</text>
-  <text x="730" y="425" text-anchor="middle" class="warn">1.4 ⚠</text>
+  <text x="630" y="130" text-anchor="middle" class="val" fill="#047857">97.1</text>
+  <text x="730" y="161" text-anchor="middle" class="val">88.4</text>
   <text x="830" y="176" text-anchor="middle" class="val">84.1</text>
 
   <!-- x ticks -->
@@ -83,7 +83,7 @@
 
   <!-- annotations -->
   <rect x="100" y="510" width="780" height="72" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
-  <text x="118" y="534" class="note">① 太短（15–80）信息不足，模型只能猜参数语义 → 65–85% 徘徊；</text>
-  <text x="118" y="554" class="note">② 303–521 Token 双峰 97.1% / 88.4%：示例 + 边界条件 + 返回格式说明带来最强信号；</text>
-  <text x="118" y="574" class="note">③ 761 档 1.4% 是异常点（该 seed 组疑似训练噪声），1172 档回落到 84.1% —— 超长描述会稀释合法度数并推高注意力成本。</text>
+  <text x="118" y="534" class="note">① 太短（15–80）约束信息不足，模型只能猜参数语义 → 准确率 65–85% 徘徊，违规调用率最高 30.4%；</text>
+  <text x="118" y="554" class="note">② 303–521 Token 双峰 97.1%：示例 + 边界条件 + 返回格式说明带来最强信号，违规调用率压到 0–1.4%；</text>
+  <text x="118" y="574" class="note">③ 超过 521 后"过约束反噬"：准确率 88.4% → 84.1%，bash 成功使用率 95.8% → 75.0% —— 超长描述稀释信号、推高注意力成本。</text>
 </svg>
