@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" font-family="'Noto Sans CJK SC','WenQuanYi Micro Hei','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrowH" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrowHRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="560" fill="#f8fafc"/>
+  <text x="490" y="42" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">验证粒度金字塔与反馈方式选择</text>
+  <text x="490" y="68" text-anchor="middle" font-size="13" fill="#64748b">与 Test Pyramid 思想一致：底层测试数量多、运行快、成本低；验证粒度从粗到细逐步深化</text>
+
+  <!-- ===== 左：金字塔 ===== -->
+  <polygon points="230,110 420,470 40,470" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.8"/>
+  <line x1="152" y1="200" x2="308" y2="200" stroke="#0284c7" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="109" y1="290" x2="351" y2="290" stroke="#0284c7" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="66"  y1="380" x2="394" y2="380" stroke="#0284c7" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <text x="230" y="160" text-anchor="middle" font-size="13" font-weight="800" fill="#075985">L4 项目级</text>
+  <text x="230" y="180" text-anchor="middle" font-size="10.5" fill="#0369a1">CI / E2E · mutation · property</text>
+  <text x="230" y="250" text-anchor="middle" font-size="13" font-weight="700" fill="#075985">L3 模块级</text>
+  <text x="230" y="270" text-anchor="middle" font-size="10.5" fill="#0369a1">pytest 全量套件（Verify Loop 主战场）</text>
+  <text x="230" y="340" text-anchor="middle" font-size="13" font-weight="700" fill="#075985">L2 函数级</text>
+  <text x="230" y="360" text-anchor="middle" font-size="10.5" fill="#0369a1">pyright --strict 类型检查</text>
+  <text x="230" y="430" text-anchor="middle" font-size="13" font-weight="700" fill="#075985">L1 行级</text>
+  <text x="230" y="450" text-anchor="middle" font-size="10.5" fill="#0369a1">LSP 诊断 / lint 工具</text>
+
+  <text x="452" y="150" font-size="11" fill="#64748b">数量少、慢、贵、深</text>
+  <text x="452" y="455" font-size="11" fill="#64748b">数量多、快、廉、浅</text>
+  <path d="M 440,140 L 440,460" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#arrowH)"/>
+  <path d="M 460,460 L 460,140" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#arrowH)"/>
+
+  <!-- 推进次序 -->
+  <rect x="490" y="120" width="450" height="64" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.3"/>
+  <text x="715" y="146" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e40af">推进次序：先由 pyright --strict 完成函数级验证 →</text>
+  <text x="715" y="168" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1e40af">再 pytest 完成模块级验证 → LSP 工具完成行级验证</text>
+  <text x="490" y="490" text-anchor="middle" font-size="11.5" fill="#64748b">当粗粒度验证大面积通过后，再向细粒度深化——避免在「跑都跑不起来」的代码上浪费时间</text>
+
+  <!-- ===== 右：同步 vs 异步 ===== -->
+  <rect x="490" y="200" width="450" height="130" rx="12" fill="#ffffff" stroke="#16a34a" stroke-width="1.6"/>
+  <text x="510" y="226" font-size="13" font-weight="800" fill="#14532d">同步反馈（Verify Loop 典型）</text>
+  <text x="510" y="248" font-size="11" fill="#334155">Agent 暂停后续操作，等验证结果回来再动。</text>
+  <text x="510" y="266" font-size="11" fill="#334155">优点：每个时刻都明确知道当前验证状态；</text>
+  <text x="510" y="284" font-size="11" fill="#334155">缺点：串入总耗时，长任务下拖慢整体进度。</text>
+  <text x="510" y="310" font-size="10.5" font-weight="600" fill="#16a34a">本章全部实验采用同步——简单可靠，可复现</text>
+
+  <rect x="490" y="344" width="450" height="130" rx="12" fill="#ffffff" stroke="#f59e0b" stroke-width="1.6"/>
+  <text x="510" y="370" font-size="13" font-weight="800" fill="#92400e">异步反馈（多 Agent 协作引入）</text>
+  <text x="510" y="392" font-size="11" fill="#334155">Agent 继续执行任务，验证在后台进行，</text>
+  <text x="510" y="410" font-size="11" fill="#334155">结果通过 webhook / 事件通知（如提交 PR 后 CI hook）。</text>
+  <text x="510" y="428" font-size="11" fill="#334155">优点：不阻塞主流程；缺点：失败处理复杂，</text>
+  <text x="510" y="446" font-size="11" fill="#334155">Agent 可能在失败通知到达前又做出大量需回滚的修改。</text>
+  <text x="510" y="466" font-size="10.5" font-weight="600" fill="#b45309">经验法则：任务时长超出阈值再切异步——等待会显著降低系统吞吐</text>
+</svg>

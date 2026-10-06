@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 600" font-family="'Noto Sans CJK SC','WenQuanYi Micro Hei','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrowG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="600" fill="#f8fafc"/>
+  <text x="490" y="42" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">验证层与其他 5 层的耦合关系</text>
+  <text x="490" y="68" text-anchor="middle" font-size="13" fill="#64748b">验证层不是孤岛：它依赖工具能力、共享文件、借记忆沉淀、被编排调度——每条边界都要显式设计</text>
+
+  <!-- 中心：验证层 -->
+  <rect x="370" y="240" width="240" height="120" rx="14" fill="#7c3aed"/>
+  <text x="490" y="285" text-anchor="middle" font-size="17" font-weight="800" fill="#ffffff">验证层（Ch7）</text>
+  <text x="490" y="310" text-anchor="middle" font-size="11.5" fill="#ede9fe">四道防线：Plan / Guard /</text>
+  <text x="490" y="328" text-anchor="middle" font-size="11.5" fill="#ede9fe">Verify Loop / Evaluator</text>
+
+  <!-- 1 工具层 -->
+  <rect x="60" y="100" width="250" height="100" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="1.6"/>
+  <text x="185" y="128" text-anchor="middle" font-size="14" font-weight="700" fill="#1e40af">工具层（Ch4）</text>
+  <text x="185" y="150" text-anchor="middle" font-size="11" fill="#475569">pytest 验证依赖 bash 工具的可用性</text>
+  <text x="185" y="168" text-anchor="middle" font-size="11" fill="#475569">权限拒绝（allow_shell=False）时闭环失效</text>
+  <text x="185" y="186" font-size="10.5" font-weight="600" fill="#2563eb">耦合点：能力依赖</text>
+  <line x1="310" y1="170" x2="392" y2="252" stroke="#2563eb" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#arrowG)"/>
+
+  <!-- 2 约束层 -->
+  <rect x="60" y="380" width="250" height="100" rx="12" fill="#ffffff" stroke="#ea580c" stroke-width="1.6"/>
+  <text x="185" y="408" text-anchor="middle" font-size="14" font-weight="700" fill="#9a3412">约束层（Ch3）</text>
+  <text x="185" y="430" text-anchor="middle" font-size="11" fill="#475569">LoopGuard 同时是两章的组件：</text>
+  <text x="185" y="448" text-anchor="middle" font-size="11" fill="#475569">Ch3 管失控风险，Ch7 管验证兜底</text>
+  <text x="185" y="466" font-size="10.5" font-weight="600" fill="#ea580c">耦合点：防御纵深（组件共享）</text>
+  <line x1="310" y1="410" x2="392" y2="348" stroke="#ea580c" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#arrowG)"/>
+
+  <!-- 3 上下文层 -->
+  <rect x="670" y="100" width="250" height="100" rx="12" fill="#ffffff" stroke="#0d9488" stroke-width="1.6"/>
+  <text x="795" y="128" text-anchor="middle" font-size="14" font-weight="700" fill="#115e59">上下文层（Ch5）</text>
+  <text x="795" y="150" text-anchor="middle" font-size="11" fill="#475569">任务描述与验证标准共享同一份</text>
+  <text x="795" y="168" text-anchor="middle" font-size="11" fill="#475569">TASK.md——规约与标准不在两份文件里漂移</text>
+  <text x="795" y="186" font-size="10.5" font-weight="600" fill="#0d9488">耦合点：单一事实来源</text>
+  <line x1="670" y1="170" x2="588" y2="252" stroke="#0d9488" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#arrowG)"/>
+
+  <!-- 4 记忆层 -->
+  <rect x="670" y="380" width="250" height="100" rx="12" fill="#ffffff" stroke="#7c3aed" stroke-width="1.6"/>
+  <text x="795" y="408" text-anchor="middle" font-size="14" font-weight="700" fill="#5b21b6">记忆层（Ch6）</text>
+  <text x="795" y="430" text-anchor="middle" font-size="11" fill="#475569">验证记录是关键的记忆实体：历史迷数、</text>
+  <text x="795" y="448" text-anchor="middle" font-size="11" fill="#475569">最佳实践进入评估者判定；Compressor</text>
+  <text x="795" y="466" font-size="11" fill="#475569">保留 Verification Marker 防止压缩丢验证段</text>
+  <line x1="670" y1="410" x2="588" y2="348" stroke="#7c3aed" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#arrowG)"/>
+
+  <!-- 5 编排层 -->
+  <rect x="370" y="508" width="240" height="76" rx="12" fill="#ffffff" stroke="#0f172a" stroke-width="1.6"/>
+  <text x="490" y="532" text-anchor="middle" font-size="14" font-weight="700" fill="#0f172a">编排层（Ch11）</text>
+  <text x="490" y="552" text-anchor="middle" font-size="11" fill="#475569">G-E 分离在单 Agent 是同进程角色，</text>
+  <text x="490" y="568" text-anchor="middle" font-size="11" fill="#475569">多 Agent 下成为独立角色 + Plan 共享载体</text>
+  <line x1="490" y1="360" x2="490" y2="508" stroke="#0f172a" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#arrowG)"/>
+
+  <!-- 底部注 -->
+  <rect x="60" y="196" width="250" height="60" rx="8" fill="#eff6ff"/>
+  <text x="185" y="220" text-anchor="middle" font-size="10.5" fill="#1e40af">工程含义：验证能力 = 工具能力 ⊗ 权限配置。</text>
+  <text x="185" y="238" text-anchor="middle" font-size="10.5" fill="#1e40af">给闭环做容量规划时先看工具层预算</text>
+</svg>

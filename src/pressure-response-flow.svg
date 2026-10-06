@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" font-family="'Noto Sans CJK SC','WenQuanYi Micro Hei','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#6b7280"/>
+    </marker>
+    <marker id="arr3g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#374151"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="560" fill="#ffffff"/>
+  <text x="440" y="34" text-anchor="middle" font-size="21" font-weight="700" fill="#111827">图 6-4　压力响应决策链（decide_compression）</text>
+  <text x="440" y="56" text-anchor="middle" font-size="12.5" fill="#6b7280">if-elif 链从上到下命中即返回：压力越大，动用的压缩级别越高</text>
+
+  <!-- 起点 -->
+  <rect x="160" y="80" width="220" height="42" rx="21" fill="#374151"/>
+  <text x="270" y="106" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">计算压力比 ratio</text>
+  <text x="400" y="106" font-size="12.5" fill="#6b7280">ratio = used_tokens / budget</text>
+  <line x1="270" y1="122" x2="270" y2="146" stroke="#374151" stroke-width="1.6" marker-end="url(#arr3g)"/>
+
+  <!-- 判断 1：< 0.70 -->
+  <polygon points="270,150 392,180 270,210 148,180" fill="#e8f5ec" stroke="#34a853" stroke-width="2"/>
+  <text x="270" y="176" text-anchor="middle" font-size="13.5" font-weight="700" fill="#188038">ratio &lt; 0.70 ?</text>
+  <text x="270" y="195" text-anchor="middle" font-size="11" fill="#5f6368">余量充足</text>
+  <line x1="392" y1="180" x2="500" y2="180" stroke="#34a853" stroke-width="1.8" marker-end="url(#arr3)"/>
+  <text x="440" y="171" text-anchor="middle" font-size="11.5" fill="#188038" font-weight="700">是</text>
+  <rect x="506" y="156" width="290" height="48" rx="8" fill="#e8f5ec" stroke="#34a853" stroke-width="1.6"/>
+  <text x="651" y="177" text-anchor="middle" font-size="13" font-weight="700" fill="#188038">none —— 不压缩</text>
+  <text x="651" y="195" text-anchor="middle" font-size="11" fill="#5f6368">返回 None，继续正常对话</text>
+
+  <!-- 判断 2：< 0.85 -->
+  <line x1="270" y1="210" x2="270" y2="234" stroke="#374151" stroke-width="1.6" marker-end="url(#arr3g)"/>
+  <text x="282" y="228" font-size="11.5" fill="#6b7280">否</text>
+  <polygon points="270,234 392,264 270,294 148,264" fill="#e8f0fe" stroke="#1a73e8" stroke-width="2"/>
+  <text x="270" y="260" text-anchor="middle" font-size="13.5" font-weight="700" fill="#185abc">ratio &lt; 0.85 ?</text>
+  <text x="270" y="279" text-anchor="middle" font-size="11" fill="#5f6368">进入警戒</text>
+  <line x1="392" y1="264" x2="500" y2="264" stroke="#1a73e8" stroke-width="1.8" marker-end="url(#arr3)"/>
+  <text x="440" y="255" text-anchor="middle" font-size="11.5" fill="#185abc" font-weight="700">是</text>
+  <rect x="506" y="240" width="290" height="48" rx="8" fill="#e8f0fe" stroke="#1a73e8" stroke-width="1.6"/>
+  <text x="651" y="261" text-anchor="middle" font-size="13" font-weight="700" fill="#185abc">microcompact —— L0 硬性截断</text>
+  <text x="651" y="279" text-anchor="middle" font-size="11" fill="#5f6368">零成本切片，保留 preserve=4 条近况</text>
+
+  <!-- 判断 3：< 0.95 -->
+  <line x1="270" y1="294" x2="270" y2="318" stroke="#374151" stroke-width="1.6" marker-end="url(#arr3g)"/>
+  <text x="282" y="312" font-size="11.5" fill="#6b7280">否</text>
+  <polygon points="270,318 392,348 270,378 148,348" fill="#fef3e2" stroke="#e8710a" stroke-width="2"/>
+  <text x="270" y="344" text-anchor="middle" font-size="13.5" font-weight="700" fill="#b06000">ratio &lt; 0.95 ?</text>
+  <text x="270" y="363" text-anchor="middle" font-size="11" fill="#5f6368">触发压缩线</text>
+  <line x1="392" y1="348" x2="500" y2="348" stroke="#e8710a" stroke-width="1.8" marker-end="url(#arr3)"/>
+  <text x="440" y="339" text-anchor="middle" font-size="11.5" fill="#b06000" font-weight="700">是</text>
+  <rect x="506" y="324" width="290" height="48" rx="8" fill="#fef3e2" stroke="#e8710a" stroke-width="1.6"/>
+  <text x="651" y="345" text-anchor="middle" font-size="13" font-weight="700" fill="#b06000">snip_and_compact —— L1 + L2</text>
+  <text x="651" y="363" text-anchor="middle" font-size="11" fill="#5f6368">先缩略替换旧结果，再做语义摘要</text>
+
+  <!-- 判断 4：< 1.0 -->
+  <line x1="270" y1="378" x2="270" y2="402" stroke="#374151" stroke-width="1.6" marker-end="url(#arr3g)"/>
+  <text x="282" y="396" font-size="11.5" fill="#6b7280">否</text>
+  <polygon points="270,402 392,432 270,462 148,432" fill="#fdecea" stroke="#d93025" stroke-width="2"/>
+  <text x="270" y="428" text-anchor="middle" font-size="13.5" font-weight="700" fill="#b3261e">ratio &lt; 1.0 ?</text>
+  <text x="270" y="447" text-anchor="middle" font-size="11" fill="#5f6368">危险区</text>
+  <line x1="392" y1="432" x2="500" y2="432" stroke="#d93025" stroke-width="1.8" marker-end="url(#arr3)"/>
+  <text x="440" y="423" text-anchor="middle" font-size="11.5" fill="#b3261e" font-weight="700">是</text>
+  <rect x="506" y="408" width="290" height="48" rx="8" fill="#fdecea" stroke="#d93025" stroke-width="1.6"/>
+  <text x="651" y="429" text-anchor="middle" font-size="13" font-weight="700" fill="#b3261e">emergency —— L3 应急压缩</text>
+  <text x="651" y="447" text-anchor="middle" font-size="11" fill="#5f6368">preserve 减半 max(preserve//2, 1)，极限腾窗</text>
+
+  <!-- 兜底 -->
+  <line x1="270" y1="462" x2="270" y2="486" stroke="#374151" stroke-width="1.6" marker-end="url(#arr3g)"/>
+  <text x="282" y="480" font-size="11.5" fill="#6b7280">否</text>
+  <rect x="120" y="486" width="300" height="50" rx="8" fill="#7f1d1d"/>
+  <text x="270" y="508" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff">reactive —— 极限模式</text>
+  <text x="270" y="526" text-anchor="middle" font-size="11" fill="#fecaca">预算已穿，多轮循环压到达标为止（至多 6 轮）</text>
+
+  <text x="440" y="552" text-anchor="middle" font-size="11.5" fill="#9ca3af">复现自书图 6-4 · 阈值经验值 0.70 / 0.85 / 0.95 / 1.0 · 高级别动作只在低级别不够时才出手</text>
+</svg>

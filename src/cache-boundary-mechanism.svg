@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 830" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <pattern id="dynHatch" patternUnits="userSpaceOnUse" width="9" height="9" patternTransform="rotate(45)">
+      <rect width="9" height="9" fill="#FFF7EA"/>
+      <line x1="0" y1="0" x2="0" y2="9" stroke="#F5D5A8" stroke-width="2.5"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="830" fill="#FCFCFD"/>
+
+  <!-- 标题区 -->
+  <text x="60" y="50" font-size="24" font-weight="700" fill="#18181B">图 5-3 · 系统提示词的分割机制</text>
+  <text x="60" y="76" font-size="13" fill="#71717A">静态前缀与动态后缀以边界标记分离 · examples/ch05/context.py · demo_cache_boundary()</text>
+
+  <!-- 主体框：一次 API 请求的 system prompt -->
+  <rect x="60" y="100" width="1080" height="296" rx="14" fill="#FFFFFF" stroke="#E4E4E7"/>
+
+  <!-- 静态前缀区 -->
+  <rect x="84" y="124" width="556" height="248" rx="10" fill="#EEEDFB" stroke="#4B3FE3"/>
+  <text x="104" y="152" font-size="15" font-weight="700" fill="#4B3FE3">静态前缀 · 跨轮可缓存</text>
+  <rect x="502" y="136" width="118" height="26" rx="13" fill="#4B3FE3"/>
+  <text x="561" y="153" text-anchor="middle" font-size="12" font-weight="600" fill="#FFFFFF" font-family="Consolas,monospace">cache hit</text>
+
+  <rect x="104" y="168" width="516" height="52" rx="8" fill="#FFFFFF" stroke="#C9C6F2"/>
+  <text x="120" y="189" font-size="11" fill="#6D28D9" font-weight="600">① 身份与基础规则</text>
+  <text x="120" y="208" font-size="12.5" fill="#3F3F46" font-family="Consolas,monospace">"You are harness.py, a coding agent."</text>
+
+  <rect x="104" y="230" width="516" height="52" rx="8" fill="#FFFFFF" stroke="#C9C6F2"/>
+  <text x="120" y="251" font-size="11" fill="#6D28D9" font-weight="600">② 工具定义（顺序必须固定）</text>
+  <text x="120" y="270" font-size="12.5" fill="#3F3F46" font-family="Consolas,monospace">"Tools: read_file, write_file, edit_file, grep_search…"</text>
+
+  <rect x="104" y="292" width="516" height="52" rx="8" fill="#FFFFFF" stroke="#C9C6F2"/>
+  <text x="120" y="313" font-size="11" fill="#6D28D9" font-weight="600">③ 项目上下文（稳定层）</text>
+  <text x="120" y="332" font-size="12.5" fill="#3F3F46" font-family="Consolas,monospace">"项目文档 · 工具 Schema · 规则与记忆"</text>
+
+  <!-- cache boundary 分界虚线 -->
+  <line x1="664" y1="112" x2="664" y2="384" stroke="#D97706" stroke-width="2.5" stroke-dasharray="7 5"/>
+  <rect x="546" y="214" width="236" height="48" rx="8" fill="#FFFFFF" stroke="#D97706"/>
+  <text x="664" y="233" text-anchor="middle" font-size="12.5" font-weight="700" fill="#B45309">cache boundary</text>
+  <text x="664" y="251" text-anchor="middle" font-size="9.5" fill="#B45309" font-family="Consolas,monospace">SYSTEM_PROMPT_DYNAMIC_BOUNDARY</text>
+
+  <!-- 动态后缀区 -->
+  <rect x="724" y="124" width="392" height="248" rx="10" fill="url(#dynHatch)" stroke="#D97706"/>
+  <text x="744" y="152" font-size="15" font-weight="700" fill="#B45309">动态后缀 · 每轮重建（不缓存）</text>
+
+  <rect x="744" y="168" width="352" height="50" rx="8" fill="#FFFFFF" stroke="#F0C98C"/>
+  <text x="760" y="188" font-size="12.5" fill="#3F3F46" font-family="Consolas,monospace">f"Current date: {date}"</text>
+  <text x="760" y="206" font-size="10.5" fill="#B45309">秒级时间戳混入前缀 → 命中率 88.6% → 0%</text>
+
+  <rect x="744" y="228" width="352" height="50" rx="8" fill="#FFFFFF" stroke="#F0C98C"/>
+  <text x="760" y="248" font-size="12.5" fill="#3F3F46" font-family="Consolas,monospace">f"Working directory: {project}"</text>
+  <text x="760" y="266" font-size="10.5" fill="#B45309">变更频繁的环境信息放边界之后</text>
+
+  <rect x="744" y="288" width="352" height="70" rx="8" fill="#FFFFFF" stroke="#F0C98C"/>
+  <text x="760" y="310" font-size="12.5" fill="#3F3F46">当前轮工具返回 · 最新用户指令</text>
+  <text x="760" y="330" font-size="10.5" fill="#B45309">动态内容放用户消息头部，而非系统提示词</text>
+  <text x="760" y="348" font-size="10.5" fill="#B45309">——保证前缀稳定是第一原则</text>
+
+  <!-- 边界标记说明 -->
+  <text x="60" y="420" font-size="12" fill="#71717A">API 请求中并不发送边界标记本身：客户端在发送前将其替换为 Anthropic 的 cache_control 参数，告诉服务端"到这里为止可以缓存"。</text>
+
+  <!-- 下半部：30 轮会话的缓存收益 -->
+  <text x="60" y="470" font-size="16" font-weight="700" fill="#18181B">30 轮会话的缓存收益（表 5-7 示意值）</text>
+
+  <!-- 无缓存条 -->
+  <text x="60" y="512" font-size="13" fill="#3F3F46" font-weight="600">无缓存</text>
+  <rect x="170" y="494" width="790" height="30" rx="6" fill="#D4D4D8"/>
+  <text x="565" y="514" text-anchor="middle" font-size="12.5" font-weight="600" fill="#3F3F46">累计输入 495 000 Token · 全部全价重算</text>
+
+  <!-- 有缓存条（堆叠） -->
+  <text x="60" y="562" font-size="13" fill="#3F3F46" font-weight="600">有缓存</text>
+  <rect x="170" y="544" width="611" height="30" rx="6" fill="#4B3FE3"/>
+  <text x="475" y="564" text-anchor="middle" font-size="12.5" font-weight="600" fill="#FFFFFF">383 000 Token · 缓存命中（约 0.1× 读价）</text>
+  <rect x="781" y="544" width="179" height="30" rx="6" fill="#F2B95C"/>
+  <text x="870" y="564" text-anchor="middle" font-size="11.5" font-weight="600" fill="#7C3E06">112 000 全价</text>
+
+  <!-- 图例 -->
+  <rect x="170" y="592" width="14" height="14" rx="3" fill="#4B3FE3"/>
+  <text x="192" y="604" font-size="12" fill="#52525B">命中缓存（cache read，跨轮复用静态前缀）</text>
+  <rect x="480" y="592" width="14" height="14" rx="3" fill="#F2B95C"/>
+  <text x="502" y="604" font-size="12" fill="#52525B">每轮重算（cache miss，动态部分 + 新增）</text>
+  <rect x="790" y="592" width="14" height="14" rx="3" fill="#D4D4D8"/>
+  <text x="812" y="604" font-size="12" fill="#52525B">无缓存对照</text>
+
+  <!-- 三条要点 -->
+  <line x1="60" y1="634" x2="1140" y2="634" stroke="#E4E4E7"/>
+  <text x="60" y="664" font-size="13" fill="#3F3F46">◆ 前缀是<tspan font-weight="700" fill="#4B3FE3">字节级匹配</tspan>：多一个空格、一个 Request-ID，断点之后全部失效</text>
+  <text x="60" y="692" font-size="13" fill="#3F3F46">◆ 断点越靠前破坏越大：开头混入秒级时间戳 → 命中率 88.6% 直跌 0%</text>
+  <text x="60" y="720" font-size="13" fill="#3F3F46">◆ 历史消息同样计入前缀：第 30 轮时前 29 轮历史可整体命中，节省远超系统提示词本身</text>
+
+  <!-- 底部轮次条 -->
+  <text x="60" y="762" font-size="12" fill="#71717A">第 1 轮全量写入（约 1.25× 写价）→ 第 2 轮起静态前缀命中（0.1× 读价）→ 静态 3500 / 全长 4000 Token 跨轮复用</text>
+  <g font-family="Consolas,monospace" font-size="10.5">
+    <rect x="60" y="776" width="60" height="24" rx="5" fill="#F2B95C"/><text x="90" y="792" text-anchor="middle" fill="#7C3E06">第1轮</text>
+    <rect x="128" y="776" width="60" height="24" rx="5" fill="#4B3FE3"/><text x="158" y="792" text-anchor="middle" fill="#FFFFFF">第2轮</text>
+    <rect x="196" y="776" width="60" height="24" rx="5" fill="#4B3FE3"/><text x="226" y="792" text-anchor="middle" fill="#FFFFFF">第3轮</text>
+    <rect x="264" y="776" width="60" height="24" rx="5" fill="#4B3FE3"/><text x="294" y="792" text-anchor="middle" fill="#FFFFFF">第5轮</text>
+    <text x="340" y="792" fill="#A1A1AA">…</text>
+    <rect x="360" y="776" width="60" height="24" rx="5" fill="#4B3FE3"/><text x="390" y="792" text-anchor="middle" fill="#FFFFFF">第10轮</text>
+    <text x="436" y="792" fill="#A1A1AA">…</text>
+    <rect x="456" y="776" width="60" height="24" rx="5" fill="#4B3FE3"/><text x="486" y="792" text-anchor="middle" fill="#FFFFFF">第30轮</text>
+    <text x="536" y="792" fill="#71717A">命中率在第 2 轮后稳定在 85% 以上</text>
+  </g>
+</svg>

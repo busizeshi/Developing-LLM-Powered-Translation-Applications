@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" font-family="'Noto Sans CJK SC','WenQuanYi Micro Hei','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrowF" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="620" fill="#f8fafc"/>
+  <text x="490" y="42" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">验证层的四道防线：沿任务时间轴排列</text>
+  <text x="490" y="68" text-anchor="middle" font-size="13" fill="#64748b">任务启动前 → 执行过程中 → 单任务收尾 → 全局评估，构成验证层的整体结构</text>
+
+  <!-- ===== 时间轴 ===== -->
+  <line x1="70" y1="130" x2="920" y2="130" stroke="#475569" stroke-width="2.5" marker-end="url(#arrowF)"/>
+  <circle cx="120" cy="130" r="6" fill="#2563eb"/>
+  <circle cx="370" cy="130" r="6" fill="#ea580c"/>
+  <circle cx="620" cy="130" r="6" fill="#7c3aed"/>
+  <circle cx="860" cy="130" r="6" fill="#0d9488"/>
+  <text x="80" y="112" font-size="11.5" font-weight="600" fill="#64748b">任务启动前</text>
+  <text x="330" y="112" font-size="11.5" font-weight="600" fill="#64748b">执行过程中</text>
+  <text x="580" y="112" font-size="11.5" font-weight="600" fill="#64748b">单任务收尾</text>
+  <text x="826" y="112" font-size="11.5" font-weight="600" fill="#64748b">全局评估</text>
+
+  <!-- 防线1 Plan Artifact -->
+  <rect x="46" y="158" width="212" height="196" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="1.8"/>
+  <rect x="46" y="158" width="212" height="46" rx="12" fill="#2563eb"/>
+  <rect x="46" y="181" width="212" height="23" fill="#2563eb"/>
+  <text x="152" y="180" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff">① Plan Artifact</text>
+  <text x="152" y="198" text-anchor="middle" font-size="10.5" fill="#dbeafe">文档式 plan-then-execute</text>
+  <text x="60" y="226" font-size="11" fill="#334155">强制把计划写入 plan.md：</text>
+  <text x="60" y="244" font-size="11" fill="#334155">现状 / 步骤 / 验证 / 回滚</text>
+  <text x="60" y="270" font-size="11" font-weight="600" fill="#1e40af">适用：按需启用</text>
+  <text x="60" y="288" font-size="11" fill="#334155">仅跨文件复杂任务启用；</text>
+  <text x="60" y="305" font-size="11" fill="#334155">简单任务上成本翻倍、收益为 0</text>
+  <text x="60" y="332" font-size="10.5" fill="#64748b">67% → 100%（simple verify）</text>
+
+  <!-- 防线2 LoopGuard -->
+  <rect x="290" y="158" width="212" height="196" rx="12" fill="#ffffff" stroke="#ea580c" stroke-width="1.8"/>
+  <rect x="290" y="158" width="212" height="46" rx="12" fill="#ea580c"/>
+  <rect x="290" y="181" width="212" height="23" fill="#ea580c"/>
+  <text x="396" y="180" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff">② LoopGuard</text>
+  <text x="396" y="198" text-anchor="middle" font-size="10.5" fill="#ffedd5">执行期循环与失败检测</text>
+  <text x="304" y="226" font-size="11" fill="#334155">相同调用重复 / 连续失败 /</text>
+  <text x="304" y="244" font-size="11" fill="#334155">同工具连击 / 总量熔断</text>
+  <text x="304" y="270" font-size="11" font-weight="600" fill="#9a3412">适用：默认开启（成本极低）</text>
+  <text x="304" y="288" font-size="11" fill="#334155">哈希检测几乎零开销；</text>
+  <text x="304" y="305" font-size="11" fill="#334155">平时不触发，触发时不可或缺乏</text>
+  <text x="304" y="332" font-size="10.5" fill="#64748b">尾部保护：F4 死循环 cost +340%</text>
+
+  <!-- 防线3 Verify Loop -->
+  <rect x="534" y="158" width="212" height="196" rx="12" fill="#ffffff" stroke="#7c3aed" stroke-width="1.8"/>
+  <rect x="534" y="158" width="212" height="46" rx="12" fill="#7c3aed"/>
+  <rect x="534" y="181" width="212" height="23" fill="#7c3aed"/>
+  <text x="640" y="180" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff">③ Verify Loop</text>
+  <text x="640" y="198" text-anchor="middle" font-size="10.5" fill="#ede9fe">框架强制 pytest 闭环</text>
+  <text x="548" y="226" font-size="11" fill="#334155">Agent 报告完成 → 框架独立</text>
+  <text x="548" y="244" font-size="11" fill="#334155">验证 → 失败回灌重试</text>
+  <text x="548" y="270" font-size="11" font-weight="600" fill="#5b21b6">适用：必须强制</text>
+  <text x="548" y="288" font-size="11" fill="#334155">收效最大的一环：</text>
+  <text x="548" y="305" font-size="11" fill="#334155">40% → 80~100% 仅靠 1 次回灌</text>
+  <text x="548" y="332" font-size="10.5" fill="#64748b">O2≈O1 证明「给工具」不等于闭环</text>
+
+  <!-- 防线4 Evaluator -->
+  <rect x="778" y="158" width="162" height="196" rx="12" fill="#ffffff" stroke="#0d9488" stroke-width="1.8"/>
+  <rect x="778" y="158" width="162" height="46" rx="12" fill="#0d9488"/>
+  <rect x="778" y="181" width="162" height="23" fill="#0d9488"/>
+  <text x="859" y="180" text-anchor="middle" font-size="13.5" font-weight="700" fill="#ffffff">④ Evaluator</text>
+  <text x="859" y="198" text-anchor="middle" font-size="10.5" fill="#ccfbf1">对抗式代码评估</text>
+  <text x="792" y="226" font-size="11" fill="#334155">pytest 之外评代码质量、</text>
+  <text x="792" y="244" font-size="11" fill="#334155">边界处理、设计合理性</text>
+  <text x="792" y="270" font-size="11" font-weight="600" fill="#115e59">适用：可选部署</text>
+  <text x="792" y="288" font-size="11" fill="#334155">测试完备的项目上属冗余；</text>
+  <text x="792" y="305" font-size="11" fill="#334155">结果只能客观评估，不能替进步</text>
+  <text x="792" y="332" font-size="10.5" fill="#64748b">BP judge 消除 verbosity bias</text>
+
+  <!-- ===== 底部：反作弊 & 排列原则 ===== -->
+  <rect x="46" y="380" width="440" height="106" rx="10" fill="#fef2f2" stroke="#dc2626" stroke-width="1.4"/>
+  <text x="64" y="406" font-size="12.5" font-weight="700" fill="#991b1b">贯穿四道防线：反作弊检测（anti-cheat）</text>
+  <text x="64" y="428" font-size="11" fill="#b91c1c">• Agent 改测试断言让它 « 通过 » → 测试文件哈希 / 权限隔离</text>
+  <text x="64" y="447" font-size="11" fill="#b91c1c">• Prompt 含 « 作弊检测 » 条款：绕过测试、空实现、硬编码预期</text>
+  <text x="64" y="466" font-size="11" fill="#b91c1c">• BP judge 硬规则：无作弊是 verdict=DONE 的前置条件</text>
+
+  <rect x="506" y="380" width="434" height="106" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.4"/>
+  <text x="524" y="406" font-size="12.5" font-weight="700" fill="#1e40af">排列原则：把确定性、廉价的验证前置</text>
+  <text x="524" y="428" font-size="11" fill="#1d4ed8">Plan 与 LoopGuard 是纯代码（近零成本）→ 无条件跑；</text>
+  <text x="524" y="447" font-size="11" fill="#1d4ed8">Verify Loop 依赖测试套件 → 默认强制；Evaluator 是 LLM 调用</text>
+  <text x="524" y="466" font-size="11" fill="#1d4ed8">（贵且有 bias）→ 按需。每道防线都有成本，按尾部风险排序投入</text>
+
+  <!-- 底部标语 -->
+  <rect x="46" y="506" width="894" height="86" rx="10" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.4"/>
+  <text x="493" y="536" text-anchor="middle" font-size="13.5" font-weight="700" fill="#115e59">设计原则：信任的路径不可观察，成功的声明不可信——尽可能少地依赖 Agent 的自我报告</text>
+  <text x="493" y="558" text-anchor="middle" font-size="11.5" fill="#0f766e">四道防线共同的哲学：把「验证」从模型的自觉（prompt 求它诚实）移到框架的义务（代码让它必须）</text>
+  <text x="493" y="580" text-anchor="middle" font-size="11" fill="#0d9488">与第 3 章约束层共同构成防御纵深：Ch3 管「不许做错事」，Ch7 管「做没做对」</text>
+</svg>

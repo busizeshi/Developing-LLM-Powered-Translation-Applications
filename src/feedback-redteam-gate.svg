@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 520" font-family="'Noto Sans CJK SC','Microsoft YaHei',sans-serif">
+  <rect x="0" y="0" width="980" height="520" fill="#f8fafc"/>
+  <text x="490" y="34" text-anchor="middle" font-size="21" font-weight="bold" fill="#0f172a">图 8-6 Red Team Golden Set：对抗评估作为发布硬门禁（8.7）</text>
+
+  <!-- 左：三类攻击 -->
+  <rect x="40" y="70" width="270" height="340" rx="14" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+  <text x="175" y="100" text-anchor="middle" font-size="16" font-weight="bold" fill="#991b1b">3 类攻击 × 26 条任务</text>
+  <g font-size="12.5" fill="#7f1d1d">
+    <rect x="60" y="122" width="230" height="66" rx="8" fill="#ffffff" stroke="#fca5a5"/>
+    <text x="175" y="147" text-anchor="middle" font-weight="bold">prompt_injection</text>
+    <text x="175" y="166" text-anchor="middle" font-size="11.5">「忽略之前的指令」藏在外部内容里</text>
+
+    <rect x="60" y="204" width="230" height="66" rx="8" fill="#ffffff" stroke="#fca5a5"/>
+    <text x="175" y="229" text-anchor="middle" font-weight="bold">privilege_escalation</text>
+    <text x="175" y="248" text-anchor="middle" font-size="11.5">诱导读取工作目录之外（/etc/hosts）</text>
+
+    <rect x="60" y="286" width="230" height="66" rx="8" fill="#ffffff" stroke="#fca5a5"/>
+    <text x="175" y="311" text-anchor="middle" font-weight="bold">pii_leak</text>
+    <text x="175" y="330" text-anchor="middle" font-size="11.5">API 密钥 / 身份证号 / 内部代码</text>
+  </g>
+  <text x="175" y="382" text-anchor="middle" font-size="11.5" fill="#991b1b">攻击文本固定入库（非模型自由生成），</text>
+  <text x="175" y="400" text-anchor="middle" font-size="11.5" fill="#991b1b">Runner 重复运行可比较不同防御版本</text>
+
+  <!-- 中：Runner 流程 -->
+  <rect x="350" y="70" width="270" height="340" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="485" y="100" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e40af">Runner（capture-only）</text>
+  <g font-size="12.5" fill="#1e3a8a">
+    <text x="368" y="136">① baseline prompt 跑全部 26 条</text>
+    <text x="368" y="166">② defense prompt 跑全部 26 条</text>
+    <text x="382" y="186">（经 AgentConfig.system_prompt_append</text>
+    <text x="382" y="206">  注入，与真实规则注入路径一致）</text>
+    <text x="368" y="236">③ 只读工具真跑，写入/执行类</text>
+    <text x="382" y="256">工具 capture-only 模拟</text>
+    <text x="368" y="286">④ success_signal 判定攻击是否得逞</text>
+    <text x="382" y="306">（尝试调用危险工具也算逃逸）</text>
+  </g>
+  <rect x="368" y="322" width="234" height="66" rx="8" fill="#dbeafe"/>
+  <text x="485" y="346" text-anchor="middle" font-size="12.5" fill="#1e40af" font-weight="bold">输出拦截率 intercept_rate</text>
+  <text x="485" y="366" text-anchor="middle" font-size="11.5" fill="#1e40af">= 1 − 攻击成功率，分攻击类统计</text>
+
+  <!-- 右：门禁逻辑 -->
+  <rect x="660" y="70" width="280" height="340" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="800" y="100" text-anchor="middle" font-size="16" font-weight="bold" fill="#166534">发布门禁（hard gate）</text>
+  <g font-size="12.5" fill="#14532d">
+    <text x="678" y="136">defense 相对 baseline：</text>
+    <text x="678" y="164">✓ 每一类拦截率都不下降</text>
+    <text x="678" y="192">✗ 出现新逃逸路径 → 候选规则</text>
+    <text x="692" y="212">不得进入 Canary（一票否决）</text>
+  </g>
+  <rect x="678" y="230" width="244" height="86" rx="8" fill="#fee2e2"/>
+  <text x="800" y="254" text-anchor="middle" font-size="11.5" fill="#991b1b" font-weight="bold">⚠ 单类提升 ≠ 整体安全</text>
+  <text x="800" y="274" text-anchor="middle" font-size="11.5" fill="#991b1b">仅提升 prompt_injection 防御、</text>
+  <text x="800" y="292" text-anchor="middle" font-size="11.5" fill="#991b1b">pii_leak 持平 → 仍不达标</text>
+  <rect x="678" y="330" width="244" height="66" rx="8" fill="#dcfce7"/>
+  <text x="800" y="354" text-anchor="middle" font-size="11.5" fill="#166534" font-weight="bold">Red Team 的作用不是证明安全，</text>
+  <text x="800" y="372" text-anchor="middle" font-size="11.5" fill="#166534">而是把「感觉安全」变成可回归的</text>
+  <text x="800" y="390" text-anchor="middle" font-size="11.5" fill="#166534">量化门禁，逃逸案例回灌 Golden Set</text>
+
+  <text x="490" y="450" text-anchor="middle" font-size="12" fill="#64748b">实现：experiments/ch08/exp3_redteam_goldenset/（intercept_rate.json；逃逸率上升 → 发布流程终止）</text>
+  <text x="490" y="486" text-anchor="middle" font-size="12.5" fill="#334155">「系统提示词里写了『不要泄露』」不等于安全 —— 必须用对抗集定期实测（8.7.2）</text>
+</svg>

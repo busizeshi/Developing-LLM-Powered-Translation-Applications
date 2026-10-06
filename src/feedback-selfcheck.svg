@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 520" font-family="'Noto Sans CJK SC','Microsoft YaHei',sans-serif">
+  <rect x="0" y="0" width="980" height="520" fill="#f8fafc"/>
+  <text x="490" y="34" text-anchor="middle" font-size="21" font-weight="bold" fill="#0f172a">图 8-7 反馈闭环的自我体检：谁来监控控制器？（8.10）</text>
+  <text x="490" y="58" text-anchor="middle" font-size="12.5" fill="#64748b">评估任务集陈旧、离线在线背离无人察觉、攻击集形式化 → 反馈闭环退化为「自动化形式主义」</text>
+
+  <!-- 四象限 2x2 -->
+  <g font-size="12.5">
+    <rect x="40" y="80" width="440" height="180" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+    <text x="260" y="110" text-anchor="middle" font-size="15.5" font-weight="bold" fill="#1e40af">① Golden Set 覆盖度</text>
+    <text x="60" y="138" fill="#1e3a8a">做法：从生产日志聚类意图分布，统计多少比例的</text>
+    <text x="60" y="158" fill="#1e3a8a">意图在 Golden Set 中找不到同类用例（覆盖率）</text>
+    <text x="60" y="186" fill="#1e3a8a">更新：不是随机抽样，按「高频意图 Top-K</text>
+    <text x="60" y="206" fill="#1e3a8a">（K 通常取 10~20）+ 低频高风险意图」定向补充</text>
+    <text x="60" y="234" fill="#1e40af" font-weight="bold">背离处理：连续两个迭代周期覆盖度下降 → 重建评估集</text>
+
+    <rect x="500" y="80" width="440" height="180" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+    <text x="720" y="110" text-anchor="middle" font-size="15.5" font-weight="bold" fill="#166534">② 离线与在线指标背离</text>
+    <text x="520" y="138" fill="#14532d">离线评估准确率与生产任务完成率的差值持续扩大</text>
+    <text x="520" y="158" fill="#14532d">→ 评估任务集已显著偏离真实分布</text>
+    <text x="520" y="186" fill="#14532d">背离超阈值 → 需要重建评估任务集，而不是继续在</text>
+    <text x="520" y="206" fill="#14532d">错误的标尺上继续优化提示词</text>
+    <text x="520" y="234" fill="#166534" font-weight="bold">监控：由监控组件实时推送，与生产流量成正比</text>
+
+    <rect x="40" y="280" width="440" height="180" rx="14" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+    <text x="260" y="310" text-anchor="middle" font-size="15.5" font-weight="bold" fill="#991b1b">③ Red Team 任务集新鲜度</text>
+    <text x="60" y="338" fill="#7f1d1d">攻击任务集若长期不变 → 防御只是在「背题」</text>
+    <text x="60" y="358" fill="#7f1d1d">来源：公开安全公告、生产环境真实逃逸事件、</text>
+    <text x="60" y="378" fill="#7f1d1d">新攻击手法</text>
+    <text x="60" y="406" fill="#7f1d1d">合并去重：新攻击与现有任务集重叠度检查，</text>
+    <text x="60" y="426" fill="#7f1d1d">高度重叠则合并而非新增，防任务膨胀致成本失控</text>
+    <text x="60" y="452" fill="#991b1b" font-weight="bold">配额：任务数不因膨胀导致运行成本爆炸</text>
+
+    <rect x="500" y="280" width="440" height="180" rx="14" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+    <text x="720" y="310" text-anchor="middle" font-size="15.5" font-weight="bold" fill="#9a3412">④ 闭环自身的成本与延迟</text>
+    <text x="520" y="338" fill="#7c2d12">在线监控指标：与生产流量成正比，属日常运维预算</text>
+    <text x="520" y="358" fill="#7c2d12">离线全量 Golden Set 评估：单次 50~100 美元量级，</text>
+    <text x="520" y="378" fill="#7c2d12">属额外消耗 → 需单独的预算申请，而非挤占日常预算</text>
+    <text x="520" y="406" fill="#7c2d12">成本与延迟由监控组件实时推送；预算被砍 = 闭环失明</text>
+    <text x="520" y="434" fill="#9a3412" font-weight="bold">「谁来监控控制器」的答案是：控制器也要被纳入被观测范围</text>
+  </g>
+
+  <text x="490" y="496" text-anchor="middle" font-size="12.5" fill="#334155">结论：没有可靠契约的自我演化比不演化更危险 —— 反馈闭环的价值不取决于它发现了多少改进点，而取决于多少改进点被安全交付到生产</text>
+</svg>

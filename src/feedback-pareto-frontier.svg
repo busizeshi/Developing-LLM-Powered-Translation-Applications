@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 560" font-family="'Noto Sans CJK SC','Microsoft YaHei',sans-serif">
+  <rect x="0" y="0" width="980" height="560" fill="#f8fafc"/>
+  <text x="490" y="34" text-anchor="middle" font-size="21" font-weight="bold" fill="#0f172a">图 8-5 Accuracy × Cost Pareto 前沿（exp4 数据回填）</text>
+
+  <!-- 坐标系 -->
+  <g>
+    <!-- 轴 -->
+    <line x1="110" y1="60" x2="110" y2="460" stroke="#334155" stroke-width="2"/>
+    <line x1="110" y1="460" x2="700" y2="460" stroke="#334155" stroke-width="2"/>
+    <!-- 网格 -->
+    <g stroke="#e2e8f0" stroke-width="1">
+      <line x1="110" y1="110" x2="700" y2="110"/>
+      <line x1="110" y1="210" x2="700" y2="210"/>
+      <line x1="110" y1="310" x2="700" y2="310"/>
+      <line x1="110" y1="410" x2="700" y2="410"/>
+      <line x1="257" y1="60" x2="257" y2="460"/>
+      <line x1="405" y1="60" x2="405" y2="460"/>
+      <line x1="552" y1="60" x2="552" y2="460"/>
+    </g>
+    <!-- 轴标签 -->
+    <text x="98" y="115" text-anchor="end" font-size="12" fill="#64748b">100%</text>
+    <text x="98" y="315" text-anchor="end" font-size="12" fill="#64748b">50%</text>
+    <text x="98" y="465" text-anchor="end" font-size="12" fill="#64748b">0</text>
+    <text x="110" y="480" font-size="12" fill="#64748b">$0</text>
+    <text x="257" y="480" text-anchor="middle" font-size="12" fill="#64748b">$0.001</text>
+    <text x="405" y="480" text-anchor="middle" font-size="12" fill="#64748b">$0.002</text>
+    <text x="552" y="480" text-anchor="middle" font-size="12" fill="#64748b">$0.003</text>
+    <text x="700" y="500" text-anchor="end" font-size="13" fill="#334155" font-weight="bold">平均成本 (USD/任务) →</text>
+    <text x="40" y="260" font-size="13" fill="#334155" font-weight="bold" transform="rotate(-90 40 260)">首次调用准确率 →</text>
+  </g>
+
+  <!-- 被支配区域 -->
+  <path d="M 205 190 L 405 240 L 405 460 L 110 460 L 110 190 Z" fill="#16a34a" opacity="0.06"/>
+  <!-- 前沿连线 -->
+  <path d="M 205 190 L 405 240" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="7 5" fill="none"/>
+  <text x="330" y="180" font-size="13" fill="#16a34a" font-weight="bold">Pareto 前沿</text>
+
+  <!-- 4 个配置点（exp4 smoke 数据） -->
+  <g>
+    <!-- SP v2: 100% acc, $0.00190 -->
+    <circle cx="452" cy="110" r="10" fill="#2563eb" stroke="#0f172a" stroke-width="2"/>
+    <text x="470" y="98" font-size="13" font-weight="bold" fill="#1e40af">SP v2（工作流策略提示词）</text>
+    <text x="470" y="116" font-size="11.5" fill="#475569">准确率 100%，成本 $0.00190</text>
+    <text x="470" y="132" font-size="11.5" fill="#dc2626">禁用工具触发率 0%，但成本上升</text>
+
+    <!-- TD v1: 100% acc, $0.00118 -->
+    <circle cx="290" cy="110" r="10" fill="#ea580c" stroke="#0f172a" stroke-width="2"/>
+    <text x="308" y="98" font-size="13" font-weight="bold" fill="#9a3412">TD v1 ◆ 前沿</text>
+    <text x="308" y="116" font-size="11.5" fill="#475569">准确率 100%，成本 $0.00118</text>
+    <text x="308" y="132" font-size="11.5" fill="#166534">两者都不差 → 可直接发布的最优方案</text>
+
+    <!-- SP v1 baseline: 60%, $0.00161 -->
+    <circle cx="335" cy="265" r="10" fill="#2563eb" opacity="0.75"/>
+    <text x="352" y="258" font-size="13" font-weight="bold" fill="#1e40af">SP v1（baseline）</text>
+    <text x="352" y="276" font-size="11.5" fill="#475569">准确率 60%，成本 $0.00161 —— 被支配</text>
+
+    <!-- TD v2: ~95%, $0.00190 (书稿示意) -->
+    <circle cx="452" cy="150" r="10" fill="#ea580c" opacity="0.75"/>
+    <text x="470" y="155" font-size="13" font-weight="bold" fill="#9a3412">TD v2</text>
+    <text x="470" y="172" font-size="11.5" fill="#475569">准确率≈95%，成本 $0.00190 —— 被支配</text>
+  </g>
+
+  <!-- 右侧解读卡 -->
+  <rect x="730" y="80" width="220" height="360" rx="14" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="840" y="108" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#0f172a">如何读这张图</text>
+  <g font-size="12" fill="#334155">
+    <text x="745" y="140">① 每个配置 = 平面上</text>
+    <text x="745" y="158">   一个点（acc, cost）</text>
+    <text x="745" y="188">② 被支配 = 存在另一点</text>
+    <text x="745" y="206">   既更准又更便宜</text>
+    <text x="745" y="236">③ 前沿上的配置</text>
+    <text x="745" y="254">   才有资格谈取舍</text>
+    <text x="745" y="284">④ 安全指标不参与</text>
+    <text x="745" y="302">   前沿比较 —— 它是</text>
+    <text x="745" y="320">   前置一票否决项</text>
+  </g>
+  <rect x="745" y="340" width="190" height="86" rx="8" fill="#fef2f2"/>
+  <text x="840" y="362" text-anchor="middle" font-size="11.5" fill="#991b1b" font-weight="bold">如果安全被设为更高优先级，</text>
+  <text x="840" y="380" text-anchor="middle" font-size="11.5" fill="#991b1b" font-weight="bold">SP v2（禁用工具 0%）</text>
+  <text x="840" y="398" text-anchor="middle" font-size="11.5" fill="#991b1b" font-weight="bold">反而可能是更合理的</text>
+  <text x="840" y="416" text-anchor="middle" font-size="11.5" fill="#991b1b" font-weight="bold">发布候选。</text>
+
+  <text x="405" y="540" text-anchor="middle" font-size="12" fill="#64748b">数据：experiments/ch08/exp4_pareto/（capture-only eval，多配置 (Subject, version) × 同一 Golden Set）</text>
+</svg>

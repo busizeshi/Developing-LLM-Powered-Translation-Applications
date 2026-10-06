@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 540" font-family="'Noto Sans CJK SC','WenQuanYi Micro Hei','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrowE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="540" fill="#f8fafc"/>
+  <text x="490" y="42" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Plan-then-Execute 三种实现对照（exp5）</text>
+  <text x="490" y="68" text-anchor="middle" font-size="13" fill="#64748b">「让 Agent 先想清楚再做」有三种做法——数据说只有文档式真正起效（simple 组 verify_passed）</text>
+
+  <!-- ===== 三列 ===== -->
+  <!-- P0 -->
+  <rect x="40" y="96" width="285" height="286" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+  <rect x="40" y="96" width="285" height="48" rx="12" fill="#64748b"/>
+  <rect x="40" y="120" width="285" height="24" fill="#64748b"/>
+  <text x="182" y="118" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">P0_none 自由发挥</text>
+  <text x="182" y="136" text-anchor="middle" font-size="10.5" fill="#e2e8f0">planning_turns=0，无前缀</text>
+  <text x="58" y="172" font-size="12" fill="#334155">直接开改，边做边想</text>
+  <text x="58" y="196" font-size="12" fill="#334155">无中间产物可供自引用</text>
+  <text x="58" y="226" font-size="11.5" font-weight="600" fill="#64748b">first_edit：</text>
+  <text x="160" y="226" font-size="11.5" fill="#334155">simple 100% / complex 100%</text>
+  <rect x="62" y="244" width="240" height="62" rx="8" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.4"/>
+  <text x="182" y="270" text-anchor="middle" font-size="20" font-weight="800" fill="#a16207">verify 67%</text>
+  <text x="182" y="292" text-anchor="middle" font-size="10.5" fill="#854d0e">simple 组端到端（2/3）</text>
+  <text x="182" y="352" text-anchor="middle" font-size="10.5" fill="#64748b">cost：$0.002 / 4.7 turns</text>
+
+  <!-- P3 -->
+  <rect x="347" y="96" width="285" height="286" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+  <rect x="347" y="96" width="285" height="48" rx="12" fill="#dc2626"/>
+  <rect x="347" y="120" width="285" height="24" fill="#dc2626"/>
+  <text x="489" y="118" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">P3_mechanical 机械式</text>
+  <text x="489" y="136" text-anchor="middle" font-size="10.5" fill="#fee2e2">前 3 轮强制只读，第 4 轮放开写</text>
+  <text x="365" y="172" font-size="12" fill="#334155">get_schemas_for_phase() 只暴露</text>
+  <text x="365" y="192" font-size="12" fill="#334155">read/grep/glob；execute_tool()</text>
+  <text x="365" y="212" font-size="12" fill="#334155">规划期拒绝写操作</text>
+  <text x="365" y="226" font-size="11.5" font-weight="600" fill="#64748b">first_edit：</text>
+  <text x="467" y="226" font-size="11.5" fill="#334155">simple 67% / complex 100%</text>
+  <rect x="369" y="244" width="240" height="62" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.6"/>
+  <text x="489" y="270" text-anchor="middle" font-size="20" font-weight="800" fill="#dc2626">verify 33%</text>
+  <text x="489" y="292" text-anchor="middle" font-size="10.5" fill="#b91c1c">simple 组端到端（1/3）—— 三档最差！</text>
+  <text x="489" y="352" text-anchor="middle" font-size="10.5" fill="#64748b">cost：$0.002 / 5.0 turns</text>
+
+  <!-- P_doc -->
+  <rect x="654" y="96" width="285" height="286" rx="12" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <rect x="654" y="96" width="285" height="48" rx="12" fill="#16a34a"/>
+  <rect x="654" y="120" width="285" height="24" fill="#16a34a"/>
+  <text x="796" y="118" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">P_doc 文档式</text>
+  <text x="796" y="136" text-anchor="middle" font-size="10.5" fill="#dcfce7">强制先 write_file plan.md 再执行</text>
+  <text x="672" y="172" font-size="12" fill="#334155">plan.md 四段：现状分析 /</text>
+  <text x="672" y="192" font-size="12" fill="#334155">修改步骤 / 验证方法 / 回滚方案</text>
+  <text x="672" y="212" font-size="12" fill="#334155">跨文件任务 plan 显著更长（1377 字符）</text>
+  <text x="672" y="226" font-size="11.5" font-weight="600" fill="#64748b">first_edit：</text>
+  <text x="774" y="226" font-size="11.5" fill="#334155">simple 100% / complex 100%</text>
+  <rect x="676" y="244" width="240" height="62" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.6"/>
+  <text x="796" y="270" text-anchor="middle" font-size="20" font-weight="800" fill="#16a34a">verify 100%</text>
+  <text x="796" y="292" text-anchor="middle" font-size="10.5" fill="#166534">simple 组端到端（3/3，6/6 任务全过）</text>
+  <text x="796" y="352" text-anchor="middle" font-size="10.5" fill="#64748b">cost：$0.006 / 7.7 turns（2-3 倍）</text>
+
+  <!-- ===== 中部洞察 ===== -->
+  <rect x="40" y="400" width="900" height="56" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="1.4"/>
+  <text x="490" y="423" text-anchor="middle" font-size="13" font-weight="700" fill="#9a3412">反模式警示：机械式只读 ≠ planning。剥夺写工具却不出计划，Agent 只是浪费了前 3 轮 read，没有形成可引用的中间产物</text>
+  <text x="490" y="444" text-anchor="middle" font-size="11.5" fill="#c2410c">plan 文档的价值在于「Agent 把思考写下来」——强制 think aloud，相当于 Anthropic evaluator-optimizer 模式</text>
+
+  <!-- ===== 底部建议 ===== -->
+  <rect x="40" y="470" width="900" height="50" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.3"/>
+  <text x="490" y="491" text-anchor="middle" font-size="13" font-weight="700" fill="#1e40af">落地建议：默认 planning_turns=0；跨文件 / 高风险任务启用 P_doc；Plan Artifact 的真正价值在团队协作与人审，无法只由单 Agent 通过率衡量</text>
+  <text x="490" y="511" text-anchor="middle" font-size="11" fill="#3b82f6">复杂任务需要更难的 fixture 才能测出 P_doc 的额外优势（smoke 中 rn001-003 在 P0 下已 100%）</text>
+</svg>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" font-family="'Noto Sans CJK SC','WenQuanYi Micro Hei','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrowC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <rect width="980" height="620" fill="#f8fafc"/>
+  <text x="490" y="42" text-anchor="middle" font-size="24" font-weight="700" fill="#0f172a">Generator-Evaluator 角色分离与 Verbosity Bias（exp3）</text>
+  <text x="490" y="68" text-anchor="middle" font-size="13" fill="#64748b">同一份代码，仅改变 Agent 回复的措辞，naive judge 的 verdict 就能翻转</text>
+
+  <!-- ===== 左：naive judge ===== -->
+  <rect x="40" y="96" width="430" height="360" rx="12" fill="#ffffff" stroke="#dc2626" stroke-width="1.8"/>
+  <rect x="40" y="96" width="430" height="46" rx="12" fill="#dc2626"/>
+  <rect x="40" y="120" width="430" height="22" fill="#dc2626"/>
+  <text x="255" y="126" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">Naive judge（s4/s7）—— 不可靠</text>
+
+  <rect x="64" y="160" width="180" height="64" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.4"/>
+  <text x="154" y="184" text-anchor="middle" font-size="12.5" font-weight="700" fill="#5b21b6">Generator 自由文本</text>
+  <text x="154" y="203" text-anchor="middle" font-size="10.5" fill="#6d28d9">「修复完成。已按 SPEC.md…」</text>
+  <line x1="244" y1="192" x2="292" y2="192" stroke="#dc2626" stroke-width="1.6" marker-end="url(#arrowC)"/>
+  <rect x="294" y="160" width="152" height="64" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.4"/>
+  <text x="370" y="182" text-anchor="middle" font-size="12.5" font-weight="700" fill="#991b1b">judge 输入被污染</text>
+  <text x="370" y="201" text-anchor="middle" font-size="10.5" fill="#b91c1c">自由文本直接进 prompt</text>
+
+  <text x="64" y="256" font-size="12" fill="#334155">• 输出：自由文本 + 正则匹配 DONE</text>
+  <text x="64" y="278" font-size="12" fill="#334155">• 评分粒度：单一综合 verdict</text>
+  <text x="64" y="300" font-size="12" fill="#334155">• 采样 1 次，temperature=0</text>
+  <text x="64" y="322" font-size="12" fill="#334155">• verdict 由 LLM 自由给出</text>
+
+  <rect x="64" y="344" width="382" height="92" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="1.3"/>
+  <text x="78" y="368" font-size="11.5" font-weight="700" fill="#991b1b">dp001 实测：输出与代码内容无关</text>
+  <text x="78" y="390" font-size="11" fill="#b91c1c">不完整代码 (A2)：DONE=0 / NOT_DONE=3</text>
+  <text x="78" y="408" font-size="11" fill="#b91c1c">完整代码   (A4)：DONE=0 / NOT_DONE=3  ← 一样判挂！</text>
+  <text x="78" y="428" font-size="10.5" fill="#dc2626">措辞矩阵：'3 passed.'→DONE；'3 passed, 0 failed…'→NOT_DONE</text>
+
+  <!-- ===== 右：BP judge ===== -->
+  <rect x="510" y="96" width="430" height="360" rx="12" fill="#ffffff" stroke="#16a34a" stroke-width="1.8"/>
+  <rect x="510" y="96" width="430" height="46" rx="12" fill="#16a34a"/>
+  <rect x="510" y="120" width="430" height="22" fill="#16a34a"/>
+  <text x="725" y="126" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">Best-Practice judge（s8/s9）—— 结构化</text>
+
+  <rect x="534" y="160" width="180" height="64" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.4"/>
+  <text x="624" y="182" text-anchor="middle" font-size="12.5" font-weight="700" fill="#075985">代码 + 规约 + 测试结果</text>
+  <text x="624" y="201" text-anchor="middle" font-size="10.5" fill="#0369a1">agent_output 不进入 judge 输入</text>
+  <line x1="714" y1="192" x2="762" y2="192" stroke="#16a34a" stroke-width="1.6" marker-end="url(#arrowC)"/>
+  <rect x="764" y="160" width="152" height="64" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.4"/>
+  <text x="840" y="182" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14532d">只看代码内容</text>
+  <text x="840" y="201" text-anchor="middle" font-size="10.5" fill="#166534">G-Eval 风格评分</text>
+
+  <text x="534" y="256" font-size="12" fill="#334155">• 输出：强制 JSON schema</text>
+  <text x="534" y="278" font-size="12" fill="#334155">• 评分粒度：每条规约独立 implemented_in_code</text>
+  <text x="534" y="300" font-size="12" fill="#334155">• 采样 5 次多数投票，temperature=0.3</text>
+  <text x="534" y="322" font-size="12" fill="#334155">• verdict 按「全规则实现 + 测试通过 + 无作弊」硬规则推导</text>
+
+  <rect x="534" y="344" width="382" height="92" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.3"/>
+  <text x="548" y="368" font-size="11.5" font-weight="700" fill="#14532d">dp001 实测：输出与代码内容一致</text>
+  <text x="548" y="390" font-size="11" fill="#166534">不完整代码 (A2*)：NOT_DONE=3（正确拒绝）</text>
+  <text x="548" y="408" font-size="11" fill="#166534">完整代码   (A4*)：DONE=3（正确放行）</text>
+  <text x="548" y="428" font-size="10.5" fill="#16a34a">措辞矩阵：完整代码 DONE 5/5，不完整代码 NOT_DONE 5/5，与措辞无关</text>
+
+  <!-- ===== 中部箭头：BP judge 三件套 ===== -->
+  <rect x="40" y="476" width="900" height="118" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="1.4"/>
+  <text x="490" y="504" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1e40af">BP judge 消除 bias 的四个手段（对照 MT-Bench 三类偏差：position / verbosity / self-enhancement）</text>
+  <rect x="66" y="520" width="200" height="58" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="166" y="543" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">① 隔离自由文本</text>
+  <text x="166" y="562" text-anchor="middle" font-size="10.5" fill="#3b82f6">agent_output 不进 judge 输入</text>
+  <rect x="286" y="520" width="200" height="58" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="386" y="543" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">② JSON 结构化输出</text>
+  <text x="386" y="562" text-anchor="middle" font-size="10.5" fill="#3b82f6">杜绝正则解析歧义</text>
+  <rect x="506" y="520" width="200" height="58" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="606" y="543" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">③ 规约级独立打分</text>
+  <text x="606" y="562" text-anchor="middle" font-size="10.5" fill="#3b82f6">每条规则一个 implemented 字段</text>
+  <rect x="726" y="520" width="200" height="58" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="826" y="543" text-anchor="middle" font-size="12" font-weight="700" fill="#1e40af">④ 5 次多数投票 + 硬规则</text>
+  <text x="826" y="562" text-anchor="middle" font-size="10.5" fill="#3b82f6">verdict 不由 LLM 自由给出</text>
+</svg>

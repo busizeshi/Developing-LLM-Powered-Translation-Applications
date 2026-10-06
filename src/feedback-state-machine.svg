@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 500" font-family="'Noto Sans CJK SC','Microsoft YaHei',sans-serif">
+  <rect x="0" y="0" width="980" height="500" fill="#f8fafc"/>
+  <text x="490" y="34" text-anchor="middle" font-size="21" font-weight="bold" fill="#0f172a">图 8-4 控制器状态机：候选变更的完整流转（feedback_loop.py）</text>
+
+  <!-- 环形状态机 -->
+  <g font-size="13">
+    <rect x="60" y="90" width="180" height="64" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+    <text x="150" y="116" text-anchor="middle" font-weight="bold" fill="#1e40af">Observe 观测</text>
+    <text x="150" y="138" text-anchor="middle" font-size="11" fill="#475569">日志 / 指标 / 失败案例</text>
+
+    <rect x="300" y="90" width="180" height="64" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+    <text x="390" y="116" text-anchor="middle" font-weight="bold" fill="#166534">Diagnose 诊断</text>
+    <text x="390" y="138" text-anchor="middle" font-size="11" fill="#475569">定位失败 → 归因到层</text>
+
+    <rect x="540" y="90" width="180" height="64" rx="12" fill="#fefce8" stroke="#ca8a04" stroke-width="2"/>
+    <text x="630" y="116" text-anchor="middle" font-weight="bold" fill="#854d0e">Candidate 提案</text>
+    <text x="630" y="138" text-anchor="middle" font-size="11" fill="#475569">hypothesis + 规则</text>
+
+    <rect x="760" y="90" width="180" height="64" rx="12" fill="#fdf4ff" stroke="#a855f7" stroke-width="2"/>
+    <text x="850" y="116" text-anchor="middle" font-weight="bold" fill="#7e22ce">Gate 硬门禁</text>
+    <text x="850" y="138" text-anchor="middle" font-size="11" fill="#475569">4 项指标一票否决</text>
+
+    <rect x="760" y="270" width="180" height="64" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+    <text x="850" y="296" text-anchor="middle" font-weight="bold" fill="#9a3412">Shadow / Canary</text>
+    <text x="850" y="318" text-anchor="middle" font-size="11" fill="#475569">影子对比 → 小流量灰度</text>
+
+    <rect x="540" y="270" width="180" height="64" rx="12" fill="#ecfdf5" stroke="#059669" stroke-width="2.5"/>
+    <text x="630" y="296" text-anchor="middle" font-weight="bold" fill="#065f46">Promote / Rollback</text>
+    <text x="630" y="318" text-anchor="middle" font-size="11" fill="#475569">全量发布 / 回滚重诊</text>
+
+    <rect x="300" y="270" width="180" height="64" rx="12" fill="#f1f5f9" stroke="#475569" stroke-width="2"/>
+    <text x="390" y="296" text-anchor="middle" font-weight="bold" fill="#334155">Update Golden Set</text>
+    <text x="390" y="318" text-anchor="middle" font-size="11" fill="#475569">失败固化为回归用例</text>
+  </g>
+
+  <!-- 主路径箭头 -->
+  <g stroke="#475569" stroke-width="2.5" fill="none">
+    <path d="M240 122 L296 122" marker-end="url(#s1)"/>
+    <path d="M480 122 L536 122" marker-end="url(#s1)"/>
+    <path d="M720 122 L756 122" marker-end="url(#s1)"/>
+    <path d="M850 158 L850 266" marker-end="url(#s1)"/>
+    <path d="M756 302 L724 302" marker-end="url(#s1)"/>
+    <path d="M536 302 L484 302" marker-end="url(#s1)"/>
+    <path d="M296 302 L150 302 L150 158" marker-end="url(#s1)"/>
+  </g>
+  <text x="268" y="112" text-anchor="middle" font-size="11" fill="#64748b">mine_failures</text>
+  <text x="508" y="112" text-anchor="middle" font-size="11" fill="#64748b">triage→generate</text>
+  <text x="738" y="112" text-anchor="middle" font-size="11" fill="#64748b">evaluate_gate</text>
+  <text x="878" y="215" text-anchor="middle" font-size="11" fill="#64748b">gate 通过</text>
+  <text x="740" y="290" text-anchor="middle" font-size="11" fill="#64748b">shadow 无差异</text>
+  <text x="510" y="290" text-anchor="middle" font-size="11" fill="#64748b">canary 达标</text>
+  <text x="222" y="290" text-anchor="middle" font-size="11" fill="#64748b">新失败入册</text>
+
+  <!-- Gate 否决回路 -->
+  <path d="M940 158 L940 340 L944 340" stroke="#dc2626" stroke-width="2" fill="none" marker-end="url(#s2)"/>
+  <text x="960" y="250" text-anchor="middle" font-size="11.5" fill="#dc2626" font-weight="bold" transform="rotate(90 960 250)">gate 否决 → 丢弃</text>
+
+  <!-- Rollback 回环 -->
+  <path d="M560 338 L560 400 L420 400 L420 338" stroke="#dc2626" stroke-width="2" fill="none" marker-end="url(#s2)"/>
+  <text x="490" y="392" text-anchor="middle" font-size="11.5" fill="#dc2626">核心指标退步 → 回滚 → 返回 Diagnose 重新诊断</text>
+
+  <!-- 底注 -->
+  <rect x="60" y="425" width="880" height="52" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="500" y="447" text-anchor="middle" font-size="12.5" fill="#334155">工程实现：experiments/ch08/feedback_loop.py 实现全部状态（candidate→gate→manifest），check_ch08_kernel.py 是无 LLM 的内核自检。</text>
+  <text x="500" y="466" text-anchor="middle" font-size="12.5" fill="#334155">自动化边界：系统可以自动「发现候选」，但不能绕过审计、灰度验证和回滚机制。</text>
+
+  <defs>
+    <marker id="s1" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#475569"/></marker>
+    <marker id="s2" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="#dc2626"/></marker>
+  </defs>
+</svg>
